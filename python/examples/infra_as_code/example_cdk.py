@@ -19,8 +19,8 @@ class ExampleCdkStack(Stack):
         # --- DataBucket (maps to AWS::S3::Bucket) ---
         data_bucket = s3.Bucket(
             self, "DataBucket",
-            encryption=s3.BucketEncryption.S3_MANAGED,  # SSEAlgorithm: AES256
-            versioned=True,                              # VersioningConfiguration: Enabled
+            encryption=s3.BucketEncryption.S3_MANAGED,
+            versioned=True,
         )
 
         # --- DataAccessRole (maps to AWS::IAM::Role) ---
@@ -29,8 +29,13 @@ class ExampleCdkStack(Stack):
             assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
         )
 
-        # Maps to the inline "BucketReadWrite" policy in the CFN template:
-        # s3:GetObject + s3:PutObject on ${DataBucket.Arn}/*
-        # grant_read_write() generates this exact statement, scoped to the
-        # bucket's object ARN pattern, without hand-writing the !Sub interpolation.
-        data_bucket.grant_read_write(data_access_role)
+        # Exact match to the CFN inline policy: GetObject + PutObject only,
+        # scoped to ${DataBucket.Arn}/* — no DeleteObject, no bucket-level
+        # actions. bucket.grant() takes the raw IAM actions and builds the
+        # correctly-scoped resource ARN(s) for you (object-level here,
+        # since these are object actions).
+        data_bucket.grant(
+            data_access_role,
+            "s3:GetObject",
+            "s3:PutObject",
+        )

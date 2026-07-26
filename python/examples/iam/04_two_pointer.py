@@ -3,7 +3,7 @@ GENERIC DSA GAP: two-pointer technique — not touched in any drill so far.
 Common fallback pattern for array/string problems when the interviewer wants
 to see you avoid an O(n^2) brute force.
 
-PROMPT (Jatin-style, could map to "merge two sorted audit-log streams by
+PROMPT ( Could map to "merge two sorted audit-log streams by
 timestamp"): "Given two sorted arrays, merge them into one sorted array."
 
 PROMPT variant (classic, likely if they go generic): "Given a sorted array,

@@ -1,6 +1,6 @@
 """
 PATTERN: Streaming aggregation — maintain a running stat without storing everything
-PROMPT (Jatin-style): "Given a stream of numbers (e.g. request latencies), support
+PROMPT : "Given a stream of numbers (e.g. request latencies), support
 add(x) and get_median() in O(log n) per add, without re-scanning full history."
 
 APPROACH: Two heaps.

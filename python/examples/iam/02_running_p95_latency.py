@@ -1,6 +1,6 @@
 """
 PATTERN: Streaming aggregation — running percentile (p95/p99) with bounded memory
-PROMPT (Jatin-style): "You're monitoring PDP (policy decision point) latency.
+PROMPT: "You're monitoring PDP (policy decision point) latency.
 Track p95 over the last N requests with O(1) memory-ish, no full history scan."
 
 APPROACH: Fixed-size sliding window + sorted insertion (bisect).

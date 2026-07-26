@@ -1,4 +1,4 @@
-# IAM Interview Example Scripts
+# IAM Example Scripts
 
 This folder contains Python examples that are useful for IAM tech lead interview preparation.
 

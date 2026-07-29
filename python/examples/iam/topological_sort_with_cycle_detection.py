@@ -1,5 +1,6 @@
 from collections import deque
 import logging
+from pprint import pprint
 
 #Dependency tree
 
@@ -29,11 +30,27 @@ class TopologicalSort:
 
     def get_sequence(self) -> list:
         # Seed queue with all zero in-degree nodes
+        '''
+        This creates a new deque object containing all nodes n from self._graph 
+        whose in-degree is zero.
+         
+        The list comprehension 
+        [[n for n in self._graph if self._in_degree[n] == 0]]
+        iterates over every node in the graph and selects only
+        those with no incoming edges.
+
+        Using deque instead of a plain list makes the collection
+        efficient for popping nodes from the left, which is a common
+        operation in Kahn’s topological sort. queue therefore starts 
+        as the initial frontier of nodes ready to be processed
+          in the topological ordering.
+        '''
         queue = deque([n for n in self._graph if self._in_degree[n] == 0])
         result = []
 
         while queue:
             node = queue.popleft()
+            pprint(node)
             result.append(node)
 
             for neighbor in self._graph[node]:
@@ -62,6 +79,7 @@ if __name__ == "__main__":
     ]
 
     sorter = TopologicalSort(input_data)
+    pprint(sorter._graph)
     result = sorter.get_sequence()
     print("Topological order:", result)
     # Valid output: ['A', 'B', 'C', 'E', 'D', 'F'] or similar

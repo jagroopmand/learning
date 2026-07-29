@@ -1,6 +1,6 @@
 import functools
 
-@functools.lru_cache(maxsize=None)
+@functools.lru_cache(maxsize=10)
 def fib(num):
     if num < 2:
         return num

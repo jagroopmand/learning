@@ -10,6 +10,12 @@ class RateLimiter:
 
     def allow(self, key: str, now: float = None) -> bool:
         now = time.monotonic() if now is None else now
+        # If this key has never been seen before, allow the first request
+        # and record its timestamp.
+        if key not in self.hits_by_key:
+            timestamps = self.hits_by_key[key]
+            timestamps.append(now)
+            return True
         timestamps = self.hits_by_key[key]
         # Evict timestamps OUTSIDE the window.
         # Boundary decision: a hit at exactly (now - window_seconds) is
